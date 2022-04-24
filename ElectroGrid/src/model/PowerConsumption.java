@@ -35,15 +35,15 @@ public class PowerConsumption {
 					return "Error while connecting to the database for inserting."; 
 				} 
 		 
-				String query = " insert into PowerConsumption (`c_ID`, `c_commercial`,`c_agriculture`,`c_residential`, `c_date`)" + " values (?, ?, ?, ?, ?)"; 
+				String query = " insert into PowerConsumption (`pc_ID`,`c_ID`, `c_commercial`,`c_agriculture`,`c_residential`, `c_date`)" + " values (?, ?, ?, ?, ?, ?)"; 
 				PreparedStatement preparedStmt = con.prepareStatement(query); 
 		 
-				
-				preparedStmt.setString(1, c_ID); 
-				preparedStmt.setString(2, c_commercial); 
-				preparedStmt.setString(3, c_agriculture); 
-				preparedStmt.setString(4, c_residential); 
-				preparedStmt.setString(5, c_date);
+				preparedStmt.setInt(1, 0); 
+				preparedStmt.setString(2, c_ID); 
+				preparedStmt.setString(3, c_commercial); 
+				preparedStmt.setString(4, c_agriculture); 
+				preparedStmt.setString(5, c_residential); 
+				preparedStmt.setString(6, c_date);
 		 
 		
 				preparedStmt.execute(); 
@@ -121,5 +121,78 @@ public class PowerConsumption {
 		 } 
 		 return output; 
 		 } 
+	
+	public String updatePowerConsumption(String ID, String c_ID, String c_commercial, String c_agriculture, String c_residential, String c_date) { 
 		
+		 {
+			
+		 String output = "";
+		 
+		 try
+		 {
+			 Connection con = connect();
+			 
+			 if (con == null) {
+				 
+				 return "Error while connecting to the database for updating.";
+				 }
+		 
+			 String query = "UPDATE PowerConsumption SET c_ID=?, c_commercial=?, c_agriculture=?, c_residential=?, c_date=? WHERE pc_ID=?";
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+
+			 preparedStmt.setString(1, c_ID); 
+			 preparedStmt.setString(2, c_commercial); 
+			 preparedStmt.setString(3, c_agriculture); 
+			 preparedStmt.setString(4, c_residential); 
+			 preparedStmt.setString(5, c_date); 
+			 preparedStmt.setInt(6, Integer.parseInt(ID));
+		
+			 preparedStmt.execute();
+			 con.close();
+			 
+			 
+			 output = "Updated successfully";
+			
+		 }
+		 catch (Exception e){
+			 
+			 output = "Error while updating the Payment.";
+			 System.err.println(e.getMessage());
+		 
+		 }
+		 return output;
+		 } 
+	
+		}	
+
+	public String deletePowerConsumption(String pc_ID)
+	 {
+	 
+		String output = "";
+		
+		try{
+			
+			Connection con = connect();
+			if (con == null){
+				return "Error while connecting to the database for deleting.";
+				}
+	 
+			String query = "delete from PowerConsumption where pc_ID=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+
+
+			preparedStmt.setInt(1, Integer.parseInt(pc_ID));
+			
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Deleted successfully";
+		}
+	 catch (Exception e) {
+		 
+		 output = "Error while deleting the Payment.";
+		 System.err.println(e.getMessage());
+	 }
+	 return output;
+	 }
 }

@@ -15,7 +15,8 @@
  				<url-pattern>/ItemService/*</url-pattern>
  				<url-pattern>/BillingService/*</url-pattern>
  				<url-pattern>/PowerTransmissionService/*</url-pattern>
- 				
+ 				<url-pattern>/PowerConsumptionService/*</url-pattern>
+ 				<url-pattern>/MaintainUserService/*</url-pattern>
 			</servlet-mapping>
 			
 			
