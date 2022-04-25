@@ -17,6 +17,7 @@
  				<url-pattern>/PowerTransmissionService/*</url-pattern>
  				<url-pattern>/PowerConsumptionService/*</url-pattern>
  				<url-pattern>/MaintainUserService/*</url-pattern>
+ 				<url-pattern>/PaymentService/*</url-pattern>
 			</servlet-mapping>
 			
 			
