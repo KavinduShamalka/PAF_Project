@@ -58,11 +58,12 @@ public class PowerTransmissionService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 
-	public String updatePayment(String itemData)
+	public String updatePowerTransmission(String itemData)
 	{
 
 		JsonObject itemObject = new JsonParser().parse(itemData).getAsJsonObject();
-
+		
+		String ptid = itemObject.get("ptid").getAsString();
 		String t_ID  = itemObject.get("t_ID").getAsString();
 		String t_Acommercial    = itemObject.get("t_Acommercial").getAsString();
 		String t_Aresidential    = itemObject.get("t_Aresidential").getAsString();
@@ -70,11 +71,30 @@ public class PowerTransmissionService {
 		String t_date       = itemObject.get("t_date").getAsString();
 		
 	
-		String output    = power.updatePowerTransmission(t_ID, t_Acommercial, t_Aresidential, t_Aagriculture, t_date );
+		String output    = power.updatePowerTransmission(ptid,t_ID, t_Acommercial, t_Aresidential, t_Aagriculture, t_date );
 
 		return output;
 		
-}
+	}
+	
+	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+
+	public String deletePowerTransmissionRecord(String itemData)
+	{
+
+		Document doc = Jsoup.parse(itemData, "", Parser.xmlParser());
+
+		String ptid = doc.select("ptid").text();
+	
+		String output = power.deletePowerTransmissionRecord(ptid);
+	
+		return output;
+	}
+
 
 
 

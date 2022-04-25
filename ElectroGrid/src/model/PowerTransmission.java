@@ -34,15 +34,15 @@ public class PowerTransmission {
 				return "Error while connecting to the database for inserting."; 
 			} 
 	 
-			String query = " insert into p_transmission (`t_ID`, `t_Acommercial`,`t_Aresidential`,`t_Aagriculture`,`t_date`)" + " values (?, ?, ?, ?, ?)"; 
+			String query = " insert into p_transmission (`ptid`,`t_ID`, `t_Acommercial`,`t_Aresidential`,`t_Aagriculture`,`t_date`)" + " values (?,?, ?, ?, ?, ?)"; 
 			PreparedStatement preparedStmt = con.prepareStatement(query); 
 	 
-			
-			preparedStmt.setString(1, t_ID); 
-			preparedStmt.setString(2, t_Acommercial); 
-			preparedStmt.setString(3, t_Aresidential); 
-			preparedStmt.setString(4, t_Aagriculture); 
-			preparedStmt.setString(5, t_date); 
+			preparedStmt.setInt(1, 0); 
+			preparedStmt.setString(2, t_ID); 
+			preparedStmt.setString(3, t_Acommercial); 
+			preparedStmt.setString(4, t_Aresidential); 
+			preparedStmt.setString(5, t_Aagriculture); 
+			preparedStmt.setString(6, t_date); 
 	 
 	
 			preparedStmt.execute(); 
@@ -128,14 +128,14 @@ public class PowerTransmission {
 	 } 
 	 catch (Exception e) 
 	 { 
-		 output = "Error while reading the Payment."; 
+		 output = "Error while reading the Power transmission details."; 
 		 System.err.println(e.getMessage()); 
 	 } 
 	 return output; 
 	 } 
 	
 	
-	public String updatePowerTransmission(String t_ID, String t_Acommercial, String t_Aresidential, String t_Aagriculture, String t_date) { 
+	public String updatePowerTransmission(String ID, String t_ID, String t_Acommercial, String t_Aresidential, String t_Aagriculture, String t_date) { 
 		
 		 {
 			
@@ -150,13 +150,15 @@ public class PowerTransmission {
 				 return "Error while connecting to the database for updating.";
 				 }
 		 
-			 String query = "UPDATE Payment SET  t_Acommercial=?, t_Aresidential=?, t_Aagriculture=?, t_date=? WHERE t_ID=?";
+			 String query = "UPDATE p_transmission SET  t_ID=?, t_Acommercial=?, t_Aresidential=?, t_Aagriculture=?, t_date=? WHERE ptid=?";
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 
-			 preparedStmt.setString(1, t_Acommercial); 
-			 preparedStmt.setString(2, t_Aresidential); 
-			 preparedStmt.setString(3, t_Aagriculture); 
-			 preparedStmt.setString(4, t_date); 
+			 preparedStmt.setString(1, t_ID); 
+			 preparedStmt.setString(2, t_Acommercial); 
+			 preparedStmt.setString(3, t_Aresidential); 
+			 preparedStmt.setString(4, t_Aagriculture); 
+			 preparedStmt.setString(5, t_date); 
+			 preparedStmt.setInt(6, Integer.parseInt(ID)); 
 			 preparedStmt.execute();
 			 con.close();
 			 
@@ -166,7 +168,7 @@ public class PowerTransmission {
 		 }
 		 catch (Exception e){
 			 
-			 output = "Error while updating the Payment.";
+			 output = "Error while updating the Power transmission details.";
 			 System.err.println(e.getMessage());
 		 
 		 }
@@ -176,6 +178,36 @@ public class PowerTransmission {
 		
 		
 		}	
+	
+	public String deletePowerTransmissionRecord(String ptid)
+	{
+		String output = "";
+		try
+		{
+			Connection con = connect();
+			if (con == null)
+			{return "Error while connecting to the database for deleting."; }
+		
+			// create a prepared statement
+			String query = "delete from p_transmission where ptid=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(ptid));
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Record deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting the item.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
 		
 	
 	
