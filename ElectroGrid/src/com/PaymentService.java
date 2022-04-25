@@ -19,16 +19,16 @@ import model.Payment;
 
 public class PaymentService {
 
-	Payment pay = new Payment();
+	Payment bilpay = new Payment();
 	
 
 	@GET
-	@Path("/")
+	@Path("/get")
 	@Produces(MediaType.TEXT_HTML) 
 	
 	public String readPayment() 
 	{ 
-		return pay.readPayment(); 
+		return bilpay.readPayment(); 
 	
 	}
 	
@@ -39,7 +39,7 @@ public class PaymentService {
 	
 
 	@POST
-	@Path("/") 
+	@Path("/insert") 
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
 	@Produces(MediaType.TEXT_PLAIN) 
 
@@ -54,7 +54,7 @@ public class PaymentService {
 	
 	{ 
 	
-		String output = pay.insertPayment(holder_name, ctype, card_no, cvv, exp_month, exp_year, total, pay_date ); 
+		String output = bilpay.insertPayment(holder_name, ctype, card_no, cvv, exp_month, exp_year, total, pay_date ); 
 		return output; 
 
 	}
@@ -68,7 +68,7 @@ public class PaymentService {
 
 
 	@PUT
-	@Path("/")
+	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 
@@ -87,7 +87,7 @@ public class PaymentService {
 		String total      = itemObject.get("total").getAsString();
 		String pay_date      = itemObject.get("pay_date").getAsString();
 	
-		String output    = pay.updatePayment(pay_id, holder_name, ctype, card_no, cvv, exp_month, exp_year, total, pay_date );
+		String output    = bilpay.updatePayment(pay_id, holder_name, ctype, card_no, cvv, exp_month, exp_year, total, pay_date );
 
 		return output;
 		
@@ -102,18 +102,18 @@ public class PaymentService {
 
 
 	@DELETE
-	@Path("/")
+	@Path("/delete")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
 
-	public String deleteItem(String itemData)
+	public String deleteItem(String paymentData)
 	{
 
-		Document doc = Jsoup.parse(itemData, "", Parser.xmlParser());
+		Document doc = Jsoup.parse(paymentData, "", Parser.xmlParser());
 
 		String pay_id = doc.select("pay_id").text();
 	
-		String output = pay.deletePayment(pay_id);
+		String output = bilpay.deletePayment(pay_id);
 	
 		return output;
 	}
