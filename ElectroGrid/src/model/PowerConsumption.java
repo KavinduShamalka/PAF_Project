@@ -8,6 +8,7 @@ public class PowerConsumption {
 		private Connection connect()
 		{
 			//Create database connection
+			//Provide the correct details: dbURL, dbUser, dbPass
 			 String dbURL = "jdbc:mysql://localhost:3306/power-consumption";
 		     String dbUser = "root";
 		     String dbPass = "199808";
@@ -16,7 +17,6 @@ public class PowerConsumption {
 			try
 			{
 				Class.forName("com.mysql.jdbc.Driver");
-				//Provide the correct details: DBServer/DBName, username, password
 				con = DriverManager.getConnection(dbURL, dbUser, dbPass);
 			}
 			catch (Exception e)
@@ -49,7 +49,7 @@ public class PowerConsumption {
 				preparedStmt.execute(); 
 				con.close(); 
 		 
-				output = "Inserted successfully"; 
+				output = "Data Inserted To Database successfully"; 
 			} 
 			catch (Exception e) 
 			{ 
@@ -71,11 +71,13 @@ public class PowerConsumption {
 					return "Error while connecting to the database for reading.";
 					} 
 		
-				output = "<table border='1'> <tr><th>Pay ID</th>"
-						+ "<th>Holder Name</th>"
-						+ "<th>Card Type</th>"
-						+ "<th>Card No</th>"
-						+ "<th>CVV</th></tr>";
+				output = "<table border='1'> <tr><th>Table ID</th>"
+						+ "<th>PowerConsumption ID</th>"
+						+ "<th>CommercialAreaPCUnit</th>"
+						+ "<th>AgricultureAreaPCUnit</th>"
+						+ "<th>ResidentialAreaPCUnit</th>"
+						+ "<th>PowerConsumptionDate</th>"
+						+ "<th>Total PC Unit</th></tr>";
 ; 
 		 
 				String query = "select * from PowerConsumption"; 
@@ -86,32 +88,32 @@ public class PowerConsumption {
 		
 				while (rs.next()) 
 				{ 
-			 
+					String pc_id = Integer.toString(rs.getInt("pc_id"));
 					String c_ID = rs.getString ("c_ID"); 
 					String c_commercial = rs.getString("c_commercial"); 
 					String c_agriculture = rs.getString("c_agriculture"); 
 					String c_residential = rs.getString("c_residential"); 
 					String c_date = rs.getString("c_date"); 
+					
+					
+					float newCcommercial = Float.parseFloat(c_commercial);
+					float newCresidential = Float.parseFloat(c_agriculture);		
+					float newCagriculture = Float.parseFloat(c_residential);		
+					
+					float totalUnit =  newCcommercial + newCresidential + newCagriculture;
 		
-					output += "<tr><td>" + c_ID + "</td>";
+					output += "<tr><td>" + pc_id + "</td>";
+					output += "<td>" + c_ID + "</td>";
 					output += "<td>" + c_commercial + "</td>";
 					output += "<td>" + c_agriculture + "</td>"; 
 					output += "<td>" + c_residential + "</td>"; 
-					output += "<td>" + c_date + "</td>"; 
-		 
-					 // buttons 		
-					   output
-							  += "<td><input name='btnUpdate' "
-							  + " type='button' value='Update' class='btn btn-secondary' </td>"
-					 		  + "<td><form method='post' action='Products.jsp'>"
-					 		  + "<input name='btnRemove' " + " type='submit' value='Remove' class='btn btn-danger'>"
-					 		  + "<input name='PowerConsumption' type='hidden' " + " value='" + c_ID + "'>" + "</form></td></tr>";
-					 		 
+					output += "<td>" + c_date + "</td>";
+					output += "<td>" + totalUnit + "</td>"; 
 				} 
 				
 		 con.close(); 
 		 
-		// Complete the html table
+		// Complete the HTML table
 		 output += "</table>"; 
 		 } 
 		 catch (Exception e) 
@@ -151,12 +153,12 @@ public class PowerConsumption {
 			 con.close();
 			 
 			 
-			 output = "Updated successfully";
+			 output = "Data Updated successfully";
 			
 		 }
 		 catch (Exception e){
 			 
-			 output = "Error while updating the Payment.";
+			 output = "Error while updating the PowerConsumption Details.";
 			 System.err.println(e.getMessage());
 		 
 		 }
@@ -186,11 +188,11 @@ public class PowerConsumption {
 			preparedStmt.execute();
 			con.close();
 			
-			output = "Deleted successfully";
+			output = "Deleted successfully Data In Database";
 		}
 	 catch (Exception e) {
 		 
-		 output = "Error while deleting the Payment.";
+		 output = "Error while deleting the PowerConsumption Details.";
 		 System.err.println(e.getMessage());
 	 }
 	 return output;
