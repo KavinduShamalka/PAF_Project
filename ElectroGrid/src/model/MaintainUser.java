@@ -26,7 +26,7 @@ public class MaintainUser {
 	
 	// Insert...
 	
-	public String insertUserDetails(String f_Name, String l_Name, String address, String phone, String mail, String city) { 
+	public String insertUserDetails(String u_id, String f_Name, String l_Name, String address, String phone, String mail, String city) { 
 		
 		String output = ""; 
 	 
@@ -37,17 +37,18 @@ public class MaintainUser {
 				return "Errors occurred while connecting to the database for inserting."; 
 			} 
 	 
-			String query = " insert into maintainuser (`u_id`, `f_Name`,`l_Name`,`address`,`phone`,`mail`,`city`)" + " values (?, ?, ?, ?, ?, ?, ?)"; 
+			String query = " insert into maintainuser (`u_num`, `u_id`, `f_Name`,`l_Name`,`address`,`phone`,`mail`,`city`)" + " values (?, ?, ?, ?, ?, ?, ?, ?)"; 
 			PreparedStatement preparedStmt = con.prepareStatement(query); 
 	 
 			
-			preparedStmt.setInt(1, 0); 
-			preparedStmt.setString(2, f_Name); 
-			preparedStmt.setString(3, l_Name); 
-			preparedStmt.setString(4, address); 
-			preparedStmt.setString(5, phone); 
-			preparedStmt.setString(6, mail); 
-			preparedStmt.setString(7, city); 
+			preparedStmt.setInt(1, 0);
+			preparedStmt.setString(2, u_id); 
+			preparedStmt.setString(3, f_Name); 
+			preparedStmt.setString(4, l_Name); 
+			preparedStmt.setString(5, address); 
+			preparedStmt.setString(6, phone); 
+			preparedStmt.setString(7, mail); 
+			preparedStmt.setString(8, city); 
 	 
 	
 			preparedStmt.execute(); 
@@ -136,7 +137,7 @@ public class MaintainUser {
 	
 	//update...
 	
-	public String updateUserDetails(String uid, String f_name, String l_name, String address, String phone, String mail, String city)
+	public String updateUserDetails(String u_num, String u_id, String f_name, String l_name, String address, String phone, String mail, String city)
 	 {
 		
 	 String output = "";
@@ -153,24 +154,24 @@ public class MaintainUser {
 		 
 		
 			 
-		 String query = "UPDATE maintainuser SET f_name=?, l_name=?, address=?, phone=?, mail=?, city=? WHERE u_id=?";
+		 String query = "UPDATE maintainuser SET u_id=?, f_name=?, l_name=?, address=?, phone=?, mail=?, city=? WHERE u_num=?";
 
 		 PreparedStatement preparedStmt = con.prepareStatement(query);
-
-		 preparedStmt.setString(1, f_name); 
-		 preparedStmt.setString(2, l_name); 
-		 preparedStmt.setString(3, address); 
-		 preparedStmt.setString(4, phone); 
-		 preparedStmt.setString(5, mail); 
-		 preparedStmt.setString(6, city);;
-		 preparedStmt.setInt(7, Integer.parseInt(uid));
+		 preparedStmt.setString(1, u_id);
+		 preparedStmt.setString(2, f_name); 
+		 preparedStmt.setString(3, l_name); 
+		 preparedStmt.setString(4, address); 
+		 preparedStmt.setString(5, phone); 
+		 preparedStmt.setString(6, mail); 
+		 preparedStmt.setString(7, city);;
+		 preparedStmt.setInt(8, Integer.parseInt(u_num));
 		
 				
 			 
 		 preparedStmt.execute();
 		 con.close();
 	
-		 output = "user Details successfully updated ";
+		 output = "User Details successfully updated ";
 		 }
 	
 	 catch (Exception e){
@@ -185,7 +186,7 @@ public class MaintainUser {
 	
 	//delete
 	
-	public String deleteUserDetails(String uID)
+	public String deleteUserDetails(String u_num)
 	 {
 	 
 		String output = "";
@@ -198,11 +199,11 @@ public class MaintainUser {
 				}
 	 
 			
-			String query = "delete from maintainuser where u_id=?";
+			String query = "delete from maintainuser where u_num=?";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			
-			preparedStmt.setInt(1, Integer.parseInt(uID));
+			preparedStmt.setInt(1, Integer.parseInt(u_num));
 			
 			preparedStmt.execute();
 			con.close();

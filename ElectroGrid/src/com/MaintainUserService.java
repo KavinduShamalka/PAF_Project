@@ -36,7 +36,8 @@ public class MaintainUserService {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
 	@Produces(MediaType.TEXT_PLAIN) 
 
-	public String insertUserDetails(@FormParam("f_Name") String f_Name, 
+	public String insertUserDetails(@FormParam("u_id") String u_id,
+						@FormParam("f_Name") String f_Name, 
 						@FormParam("l_Name") String l_Name, 
 						@FormParam("address") String address, 
 						@FormParam("phone") String phone,
@@ -45,7 +46,7 @@ public class MaintainUserService {
 	
 	{ 
 	
-		String output = itemObj.insertUserDetails(f_Name, l_Name, address, phone, mail, city); 
+		String output = itemObj.insertUserDetails(u_id, f_Name, l_Name, address, phone, mail, city); 
 		return output; 
 	}
 
@@ -66,19 +67,19 @@ public class MaintainUserService {
 
 		JsonObject itemObject = new JsonParser().parse(itemData).getAsJsonObject();
 
-		String u_id  = itemObject.get("u_id").getAsString();
-		String f_name    = itemObject.get("f_name").getAsString();
-		String l_name    = itemObject.get("l_name").getAsString();
-		String address   = itemObject.get("address").getAsString();
+		String u_num  = itemObject.get("u_num").getAsString();
+		String u_id    = itemObject.get("u_id").getAsString();
+		String f_Name    = itemObject.get("f_Name").getAsString();
+		String l_Name   = itemObject.get("l_Name").getAsString();
+		String address       = itemObject.get("address").getAsString();
 		String phone     = itemObject.get("phone").getAsString();
-		String mail      = itemObject.get("mail").getAsString();
-		String city      = itemObject.get("city").getAsString();
+		String mail     = itemObject.get("mail").getAsString();
+		String city     = itemObject.get("city").getAsString();
 	
-		String output    = itemObj.updateUserDetails(u_id, f_name, l_name, address, phone, mail, city );
-		
-		return output;
-		
-		}
+		String output    = itemObj.updateUserDetails(u_num, u_id, f_Name, l_Name, address, phone, mail, city);
+
+		return output;		
+	}
 			
 		
 
@@ -101,9 +102,9 @@ public class MaintainUserService {
 
 		Document doc = Jsoup.parse(itemData, "", Parser.xmlParser());
 
-		String user_id = doc.select("user_id").text();
+		String u_num = doc.select("u_num").text();
 	
-		String output = itemObj.deleteUserDetails(user_id);
+		String output = itemObj.deleteUserDetails(u_num);
 	
 		return output;
 	}
