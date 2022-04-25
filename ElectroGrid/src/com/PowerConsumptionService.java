@@ -22,7 +22,7 @@ public class PowerConsumptionService {
 	
 
 	@GET
-	@Path("/")
+	@Path("/get")
 	@Produces(MediaType.TEXT_HTML) 
 	
 	public String readPowerConsumption() 
@@ -32,7 +32,7 @@ public class PowerConsumptionService {
 	}
 	
 	@POST
-	@Path("/") 
+	@Path("/insert") 
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
 	@Produces(MediaType.TEXT_PLAIN) 
 
@@ -51,7 +51,7 @@ public class PowerConsumptionService {
 	
 	
 	@PUT
-	@Path("/")
+	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 
@@ -74,14 +74,14 @@ public class PowerConsumptionService {
 	
 	
 	@DELETE
-	@Path("/")
+	@Path("/delete")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
 
-	public String deletePowerConsumption(String itemData)
+	public String deletePowerConsumption(String pConsumptionData)
 	{
 
-		Document doc = Jsoup.parse(itemData, "", Parser.xmlParser());
+		Document doc = Jsoup.parse(pConsumptionData, "", Parser.xmlParser());
 
 		String pc_ID = doc.select("pc_ID").text();
 	
