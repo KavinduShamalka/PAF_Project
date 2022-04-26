@@ -31,7 +31,7 @@ public class PowerTransmission {
 			Connection con = connect();
 	  
 			if (con == null) {
-				return "Error while connecting to the database for inserting."; 
+				return "Error while inserting the power transmission data."; 
 			} 
 	 
 			String query = " insert into p_transmission (`ptid`,`t_ID`, `t_Acommercial`,`t_Aresidential`,`t_Aagriculture`,`t_date`)" + " values (?,?, ?, ?, ?, ?)"; 
@@ -48,7 +48,7 @@ public class PowerTransmission {
 			preparedStmt.execute(); 
 			con.close(); 
 	 
-			output = "Inserted successfully"; 
+			output = "Power transmission data inserted successfully."; 
 		} 
 		catch (Exception e) 
 		{ 
@@ -73,12 +73,10 @@ public class PowerTransmission {
 	
 			output = "<table border='1'> <tr><th>Power Transmission ID</th>"
 					+ "<th>Commercial</th>"
-					+ "<th>Residential Type</th>"
+					+ "<th>Residential</th>"
 					+ "<th>Agriculture</th>"
 					+ "<th>Total units</th>"
-					+ "<th>Date of transmission</th>"
-					+ "<th>Update</th>"
-					+ "<th>Delete</th>"; 
+					+ "<th>Date of transmission</th>"; 
 	 
 			String query = "select * from p_transmission"; 
 			Statement stmt = con.createStatement(); 
@@ -88,8 +86,8 @@ public class PowerTransmission {
 	
 			while (rs.next()) 
 			{ 
-		 
-				String t_ID = Integer.toString(rs.getInt("t_ID")); 
+				String ptid = Integer.toString(rs.getInt("ptid"));
+				String t_ID = rs.getString("t_ID"); 
 				String t_Acommercial = rs.getString("t_Acommercial"); 
 				String t_Aresidential = rs.getString("t_Aresidential"); 
 				String t_Aagriculture = rs.getString("t_Aagriculture"); 
@@ -111,13 +109,6 @@ public class PowerTransmission {
 				output += "<td>" + t_date + "</td>"; 
 				
 	 
-				 // buttons 		
-				   output
-						  += "<td><input name='btnUpdate' "
-						  + " type='button' value='Update' class='btn btn-secondary' </td>"
-				 		  + "<td><form method='post' action='Products.jsp'>"
-				 		  + "<input name='btnRemove' " + " type='submit' value='Remove' class='btn btn-danger'>"
-				 		  + "<input name='Payment' type='hidden' " + " value='" + t_ID + "'>" + "</form></td></tr>";
 				 		 
 			} 
 			
@@ -203,7 +194,7 @@ public class PowerTransmission {
 		}
 		catch (Exception e)
 		{
-			output = "Error while deleting the item.";
+			output = "Error while deleting the details.";
 			System.err.println(e.getMessage());
 		}
 		return output;

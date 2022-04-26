@@ -21,7 +21,7 @@ public class PowerTransmissionService {
 	PowerTransmission power = new PowerTransmission();
 	
 	@GET
-	@Path("/")
+	@Path("/get")
 	@Produces(MediaType.TEXT_HTML) 
 	
 	public String readPowerTransmission() 
@@ -34,7 +34,7 @@ public class PowerTransmissionService {
 	
 	
 	@POST
-	@Path("/") 
+	@Path("/insert") 
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
 	@Produces(MediaType.TEXT_PLAIN) 
 
@@ -53,8 +53,9 @@ public class PowerTransmissionService {
 
 	
 	
+	
 	@PUT
-	@Path("/")
+	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 
@@ -79,7 +80,7 @@ public class PowerTransmissionService {
 	
 	
 	@DELETE
-	@Path("/")
+	@Path("/delete")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
 
